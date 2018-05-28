@@ -25,7 +25,7 @@ npm i -D -g truffle
 
 
 ``` bash
-# serve with hot reload at localhost:8080
+# run project on localhost:8080
 npm run dev
 
 #compile solidity files
