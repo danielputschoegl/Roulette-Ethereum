@@ -28,23 +28,23 @@ npm i -D -g truffle
 # run project on localhost:8080
 npm run dev
 
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
 #compile solidity files
 truffle compile
 ```
 
 9. index.html im Browser aufrufen
 
-## Build Setup
+## Sonstiges
 
 ``` bash
 # "npm run dev" error handling
 npm install --save bignumber.js
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 
 # run unit tests
 npm run unit
