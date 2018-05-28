@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.24;
 
 /// @title Contract to bet Ether for a number and win randomly when the number of bets is met.
 contract Roulette {
@@ -31,19 +31,17 @@ contract Roulette {
         emit Balance(address(this).balance);
     }
 
-    function bet(uint[] _number, uint _factor) public payable {
-        require(_factor >= 1 && _factor <= 17);
+    function bet(uint[] _number, uint[] _value, uint[] _factor) public payable {
+        require(_number.length == _value.length && _value.length == _factor.length && _number.length == _factor.length);
 
-        require(msg.value >= minimumBet);
+        for (uint i = 0; i < _number.length; i++) {
+                require(_value[1] <= maximumBet && _value[1] >= minimumBet);
 
-        require(msg.value <= maximumBet);
+                require(_factor[1] >= 1 && _factor[1] <= 17);
 
-        for (uint j; j < _number.length; j++) {
-            assert(_number[j] >= 0 && _number[j] <= 36);
-
-            playerBets[msg.sender].push(_number[j]);
-            playerBets[msg.sender].push(msg.value);
-            playerBets[msg.sender].push(_factor);
+                playerBets[msg.sender].push(_number[i]);
+                playerBets[msg.sender].push(_value[i]);
+                playerBets[msg.sender].push(_factor[i]);
         }
 
         determineWinner();

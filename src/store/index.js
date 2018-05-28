@@ -40,8 +40,12 @@ export const store = new Vuex.Store({
         pushBet(state, payload) {
             var temp = []
             temp.push(payload.number)
+            temp.push(payload.amount)
             temp.push(payload.factor)
             state.rouletteComponent.bets.push(temp)
+        },
+        addAmount(state, payload) {
+            state.rouletteComponent.totalBet += payload;
         }
     },
     actions: {
@@ -69,6 +73,9 @@ export const store = new Vuex.Store({
         },
         setBet({commit}, payload) {
             commit('pushBet', payload)
+        },
+        addBetAmount({commit}, payload) {
+            commit('addAmount', payload)
         }
     }
 })

@@ -29,12 +29,11 @@
         </b-row>
         <b-row class="mb-3">
             <b-col>
-                Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{
-                this.$store.state.contract.minimumBet }}, Max: {{ maximum }})
+                Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max: {{ maximum }})
             </b-col>
         </b-row>
         <b-row>
-            <b-button style="height: 15em" variant="success" v-on:click="clickNumber">
+            <b-button style="height: 15em" variant="success" v-on:click="clickNumber([0], 17)">
                 {{0}}
             </b-button>
             <b-col class="ml-0" cols="10.9">
@@ -50,20 +49,20 @@
                 </div>
                 <div>
                     <span v-for="n in 36" v-if="(n + 1) % 3 == 0">
-                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber">
+                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber([n], 17)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" v-on:click="clickNumber">
+                        <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
                             {{n}}
                         </b-button>
                     </span>
                 </div>
                 <div>
                     <span v-for="n in 36" v-if="(n + 2) % 3 == 0">
-                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber">
+                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber([n], 17)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" v-on:click="clickNumber">
+                        <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
                             {{n}}
                         </b-button>
                     </span>
@@ -72,11 +71,14 @@
         </b-row>
         <b-row class="mb-3 mt-5">
             <b-col>
+                <div>
+                    Already Bet: {{ totalBet }}
+                </div>
                 <b-button style="width: 10em;" variant="success" v-on:click="play">
                     Play
                 </b-button>
                 <div>
-                    Total Won: {{ totalWon }}
+                    Total Won: {{ totalBet }}
                 </div>
                 <div v-if="winEvent != null">
                     {{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}
@@ -99,6 +101,7 @@
                 balance: this.$store.state.rouletteComponent.balance,
                 winEvent: this.$store.state.rouletteComponent.winEvent,
                 totalWon: this.$store.state.rouletteComponent.totalWon,
+                totalBet: this.$store.state.rouletteComponent.totalBet,
             }
         },
         methods: {
@@ -155,31 +158,32 @@
                 numbers.forEach(function (element) {
                     number.push(element)
                 })
-
                 this.$store.dispatch('setBet', {
                     number: number,
+                    amount: this.amount,
                     factor: factor
                 })
-                this.$store.state.contractInstance().playerBets((err, result) => {
-                    if (!err && result != null) {
-                        console.log(result)
-                    }
-                })
-
-                var bets = this.$store.state.rouletteComponent.bets
-
-                for (var i = 0; i < bets.length; i++) {
-                    for (var k = 0; k < bets[i][0].length; k++) {
-                        console.log(bets[i][0][k])
-                        console.log(bets[i][1])
-                    }
-                }
+                this.$store.dispatch('addBetAmount', this.amount)
+                this.totalBet = this.$store.state.rouletteComponent.totalBet;
             },
 
             play() {
-                this.$store.state.contractInstance().determineWinner({
+                var bets = this.$store.state.rouletteComponent.bets
+                var number = []
+                var amount = []
+                var factor = []
+
+                for (var i = 0; i < bets.length; i++) {
+                    for (var j = 0; j < bets[i][0].length; j++) {
+                        number.push(bets[i][0][j])
+                        amount.push(bets[i][1])
+                        factor.push(bets[i][2])
+                    }
+                }
+
+                this.$store.state.contractInstance().bet(number, amount, factor, {
                     gas: 300000,
-                    value: 0,
+                    value: this.$store.state.web3.web3Instance().toWei(this.totalBet, 'ether'),
                     from: this.$store.state.web3.coinbase
                 }, (err, result) => {
                     if (err) {
@@ -195,6 +199,7 @@
                                 this.winEvent._totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
                                 this.winEvent._winningNumber = result.args._winningNumber
                                 this.winEvent._betNumber = result.args._betNumber
+                                console.log(this.winEvent)
                                 this.totalWon += this.winEvent._totalAmount;
                             }
                         })
