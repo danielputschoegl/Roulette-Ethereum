@@ -35,20 +35,27 @@ contract Roulette {
         require(_number.length == _value.length && _value.length == _factor.length && _number.length == _factor.length);
 
         for (uint i = 0; i < _number.length; i++) {
-                require(_value[1] <= maximumBet && _value[1] >= minimumBet);
+            require(0 <= _number[i] && _number[i] <= 50);
 
-                require(_factor[1] >= 1 && _factor[1] <= 17);
+            require(minimumBet <= _value[i] && _value[i] <= maximumBet);
 
-                playerBets[msg.sender].push(_number[i]);
-                playerBets[msg.sender].push(_value[i]);
-                playerBets[msg.sender].push(_factor[i]);
+            require(_factor[i] >= 1 && _factor[i] <= 17);
+
+            playerBets[msg.sender].push(_number[i]);
+            playerBets[msg.sender].push(_value[i]);
+            playerBets[msg.sender].push(_factor[i]);
         }
 
         determineWinner();
     }
 
     function determineWinner() private {
-        uint winningNumber = block.number % 36;
+        uint winningNumber = uint(blockhash(block.number - 1));
+        for (uint i = 0; i < playerBets[msg.sender].length; ++i) {
+            winningNumber += playerBets[msg.sender][i];
+        }
+
+        winningNumber = winningNumber % 37;
 
         distributePrizes(winningNumber);
     }

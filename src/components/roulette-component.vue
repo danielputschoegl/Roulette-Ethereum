@@ -78,7 +78,7 @@
                     Play
                 </b-button>
                 <div>
-                    Total Won: {{ totalBet }}
+                    Total Won: {{ totalWon }}
                 </div>
                 <div v-if="winEvent != null">
                     {{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}
@@ -102,6 +102,8 @@
                 winEvent: this.$store.state.rouletteComponent.winEvent,
                 totalWon: this.$store.state.rouletteComponent.totalWon,
                 totalBet: this.$store.state.rouletteComponent.totalBet,
+                playedCount: this.$store.state.rouletteComponent.playedCount,
+                wonCount: this.$store.state.rouletteComponent.wonCount,
             }
         },
         methods: {
@@ -144,8 +146,9 @@
                         let Balance = this.$store.state.contractInstance().Balance()
                         Balance.watch((err, result) => {
                             if (err) {
-                                console.log('could not get event Won()')
+                                console.log('could not get event Balance()')
                             } else {
+                                console.log('balance')
                                 this.balance = parseFloat(web3.fromWei(result.args._balance, 'ether'))
                             }
                         })
@@ -168,6 +171,8 @@
             },
 
             play() {
+                this.$store.dispatch('addPlayed', 1)
+                this.playedCount = this.$store.state.rouletteComponent.playedCount
                 var bets = this.$store.state.rouletteComponent.bets
                 var number = []
                 var amount = []
@@ -176,7 +181,7 @@
                 for (var i = 0; i < bets.length; i++) {
                     for (var j = 0; j < bets[i][0].length; j++) {
                         number.push(bets[i][0][j])
-                        amount.push(bets[i][1])
+                        amount.push(parseInt(this.$store.state.web3.web3Instance().toWei(bets[i][1], 'ether')))
                         factor.push(bets[i][2])
                     }
                 }
@@ -188,25 +193,28 @@
                 }, (err, result) => {
                     if (err) {
                         console.log(err)
-                        this.pending = false
                     } else {
                         let Won = this.$store.state.contractInstance().Won()
                         Won.watch((err, result) => {
                             if (err) {
                                 console.log('could not get event Won()')
                             } else {
-                                this.winEvent = result.args
-                                this.winEvent._totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
-                                this.winEvent._winningNumber = result.args._winningNumber
-                                this.winEvent._betNumber = result.args._betNumber
-                                console.log(this.winEvent)
-                                this.totalWon += this.winEvent._totalAmount;
+                                if (this.wonCount < this.playedCount) {
+                                    this.winEvent = result.args
+                                    this.winEvent._totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
+                                    this.winEvent._winningNumber = result.args._winningNumber
+                                    this.winEvent._betNumber = result.args._betNumber
+                                    console.log("winEvent: " + this.winEvent._winningNumber)
+                                    this.totalWon += this.winEvent._totalAmount;
+                                    this.$store.dispatch('addWon', 1)
+                                    this.wonCount = this.$store.state.rouletteComponent.wonCount
+                                }
                             }
                         })
                         let Balance = this.$store.state.contractInstance().Balance()
                         Balance.watch((err, result) => {
                             if (err) {
-                                console.log('could not get event Won()')
+                                console.log('could not get event Balance()')
                             } else {
                                 this.balance = parseFloat(web3.fromWei(result.args._balance, 'ether'))
                             }

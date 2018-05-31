@@ -22,6 +22,8 @@ let state = {
         winEvent: null,
         totalWon: 0,
         totalBet: 0,
+        playedCount: 0,
+        wonCount: 0,
     }
 }
 

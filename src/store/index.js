@@ -46,6 +46,12 @@ export const store = new Vuex.Store({
         },
         addAmount(state, payload) {
             state.rouletteComponent.totalBet += payload;
+        },
+        playedCount(state, payload) {
+            state.rouletteComponent.playedCount += payload;
+        },
+        wonCount(state, payload) {
+            state.rouletteComponent.wonCount += payload;
         }
     },
     actions: {
@@ -76,6 +82,12 @@ export const store = new Vuex.Store({
         },
         addBetAmount({commit}, payload) {
             commit('addAmount', payload)
+        },
+        addPlayed({commit}, payload) {
+            commit('playedCount', payload)
+        },
+        addWon({commit}, payload) {
+            commit('wonCount', payload)
         }
     }
 })
