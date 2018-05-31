@@ -29,7 +29,8 @@
         </b-row>
         <b-row class="mb-3">
             <b-col>
-                Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max: {{ maximum }})
+                Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max: {{
+                maximum }})
             </b-col>
         </b-row>
         <b-row>
@@ -69,6 +70,15 @@
                 </div>
             </b-col>
         </b-row>
+        <b-row>
+                <a href="#" v-bind:class="[activeClass]"><img id="wheel" width="400" height="400"
+                                                              src="../assets/roulette_wheel.png"/></a>
+            <b-col>
+                <div v-if="winEvent != null" style="font-size: 100px">
+                    {{ winEvent._winningNumber }}
+                </div>
+            </b-col>
+        </b-row>
         <b-row class="mb-3 mt-5">
             <b-col>
                 <div>
@@ -89,7 +99,10 @@
 </template>
 
 <script>
+    import Col from "bootstrap-vue/es/components/layout/col";
+
     export default {
+        components: {Col},
         name: 'roulette',
         data() {
             return {
@@ -104,6 +117,7 @@
                 totalBet: this.$store.state.rouletteComponent.totalBet,
                 playedCount: this.$store.state.rouletteComponent.playedCount,
                 wonCount: this.$store.state.rouletteComponent.wonCount,
+                activeClass: ''
             }
         },
         methods: {
@@ -171,6 +185,7 @@
             },
 
             play() {
+                this.activeClass = 'active'
                 this.$store.dispatch('addPlayed', 1)
                 this.playedCount = this.$store.state.rouletteComponent.playedCount
                 var bets = this.$store.state.rouletteComponent.bets
@@ -202,7 +217,7 @@
                                 if (this.wonCount < this.playedCount) {
                                     this.winEvent = result.args
                                     this.winEvent._totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
-                                    this.winEvent._winningNumber = result.args._winningNumber
+                                    this.winEvent._winningNumber = parseInt(result.args._winningNumber)
                                     this.winEvent._betNumber = result.args._betNumber
                                     console.log("winEvent: " + this.winEvent._winningNumber)
                                     this.totalWon += this.winEvent._totalAmount;
@@ -219,7 +234,9 @@
                                 this.balance = parseFloat(web3.fromWei(result.args._balance, 'ether'))
                             }
                         })
+
                     }
+                    this.activeClass = 'fadeOut'
                 })
             },
 
