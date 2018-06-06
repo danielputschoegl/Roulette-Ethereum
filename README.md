@@ -19,7 +19,7 @@ npm i -D -g truffle
 3. Browserplugin für Metamask installieren
 4. https://remix.ethereum.org
 5. Roulette.sol kopieren und in die Remix IDE kopieren
-6. Compiler-Version der Remix IDE auf 0.4.22 setzen
+6. Compiler-Version der Remix IDE auf 0.4.24 setzen
 7. Contract deployen
 8. Contract Address kopieren und in getContract.js einfügen
 
@@ -46,11 +46,12 @@ truffle compile
 # "npm run dev" error handling
 npm install --save bignumber.js
 
-# run unit tests
+# "truffle compile" error handling (truffle compile error parsing expected identifier, got LParen)
+npm uninstall -g truffle
+npm uninstall -g solc
+npm install -g truffle
+
+# run tests
 npm run unit
-
-# run e2e tests
 npm run e2e
-
-# run all tests
 npm test

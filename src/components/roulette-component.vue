@@ -34,9 +34,14 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-button style="height: 15em" variant="success" v-on:click="clickNumber([0], 17)">
-                {{0}}
+            <b-button style="width: 30em" variant="success" v-on:click="clickNumber([0], 17)">
+                0
             </b-button>
+            <b-button style="width: 30em" variant="success" v-on:click="clickNumber([0], 17)">
+                00
+            </b-button>
+        </b-row>
+        <b-row>
             <b-col class="ml-0" cols="10.9">
                 <div>
                     <span v-for="n in 36" v-if="n % 3 == 0">
@@ -45,6 +50,11 @@
                         </b-button>
                         <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
                             {{ n }}
+                        </b-button>
+                    </span>
+                    <span>
+                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER3TO36, Fields.FACTOR3TO36)">
+                            2:1
                         </b-button>
                     </span>
                 </div>
@@ -57,6 +67,11 @@
                             {{n}}
                         </b-button>
                     </span>
+                    <span>
+                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER2TO35, Fields.FACTOR2TO35)">
+                            2:1
+                        </b-button>
+                    </span>
                 </div>
                 <div>
                     <span v-for="n in 36" v-if="(n + 2) % 3 == 0">
@@ -67,12 +82,57 @@
                             {{n}}
                         </b-button>
                     </span>
+                    <span>
+                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER1TO34, Fields.FACTOR1TO34)">
+                            2:1
+                        </b-button>
+                    </span>
                 </div>
             </b-col>
         </b-row>
         <b-row>
-                <a href="#" v-bind:class="[activeClass]"><img id="wheel" width="400" height="400"
-                                                              src="../assets/roulette_wheel.png"/></a>
+            <b-button style="width: 20em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBER1T012, Fields.FACTOR1T012)">
+                1st 12
+            </b-button>
+            <b-button style="width: 20em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBER2T012, Fields.FACTOR2T012)">
+                2nd 12
+            </b-button>
+            <b-button style="width: 20em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBER3T012, Fields.FACTOR3T012)">
+                3rd 12
+            </b-button>
+        </b-row>
+        <b-row>
+            <b-button style="width: 10em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBER1TO18, Fields.FACTOR1TO18)">
+                1 to 18
+            </b-button>
+            <b-button style="width: 10em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBEREVEN, Fields.FACTOREVEN)">
+                EVEN
+            </b-button>
+            <b-button style="width: 10em" variant="danger"
+                      v-on:click="clickNumber(Fields.NUMBERRED, Fields.FACTORRED)">
+                RED
+            </b-button>
+            <b-button style="width: 10em" variant="dark"
+                      v-on:click="clickNumber(Fields.NUMBERBLACK, Fields.FACTORBLACK)">
+                BLACK
+            </b-button>
+            <b-button style="width: 10em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBERODD, Fields.FACTORODD)">
+                ODD
+            </b-button>
+            <b-button style="width: 10em" variant="success"
+                      v-on:click="clickNumber(Fields.NUMBER19TO36, Fields.FACTOR19TO36)">
+                19 to 36
+            </b-button>
+        </b-row>
+        <b-row>
+            <a href="#" v-bind:class="[activeClass]"><img id="wheel" width="400" height="400"
+                                                          src="../assets/roulette_wheel.png"/></a>
             <b-col>
                 <div v-if="winEvent != null" style="font-size: 100px">
                     {{ winEvent._winningNumber }}
@@ -100,6 +160,7 @@
 
 <script>
     import Col from "bootstrap-vue/es/components/layout/col";
+    import Fields from '../util/constants/fields'
 
     export default {
         components: {Col},
@@ -117,7 +178,8 @@
                 totalBet: this.$store.state.rouletteComponent.totalBet,
                 playedCount: this.$store.state.rouletteComponent.playedCount,
                 wonCount: this.$store.state.rouletteComponent.wonCount,
-                activeClass: ''
+                activeClass: '',
+                Fields: Fields
             }
         },
         methods: {

@@ -86,7 +86,7 @@ contract Roulette {
     }
 
     function kill() public {
-        address bank = 0xd1a9d9ac8D7212aa83C22b0d74AC07d9B971339f;
+        address bank = 0x2c5D0A6279E7e8F42032E1dc33418208DDC508FD;
         bank.transfer(address(this).balance);
         emit Balance(address(this).balance);
         selfdestruct(owner);
