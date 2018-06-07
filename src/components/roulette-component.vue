@@ -34,11 +34,8 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-button style="width: 30em" variant="success" v-on:click="clickNumber([0], 17)">
+            <b-button style="width: 60em" variant="success" v-on:click="clickNumber([0], 17)">
                 0
-            </b-button>
-            <b-button style="width: 30em" variant="success" v-on:click="clickNumber([-1], 17)">
-                00
             </b-button>
         </b-row>
         <b-row>
