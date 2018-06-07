@@ -1,40 +1,46 @@
 <template>
     <b-container class="bv-example-row">
         <b-row class="mb-3">
-            <b-col>
-                Contract Balance: {{ balance }}
-                <b-button style="height: 2.5em" variant="success" v-on:click="update">
-                    Update
-                </b-button>
-                <b-button style="height: 2.5em" variant="danger" v-on:click="kill">
-                    Kill
-                </b-button>
+            <b-col class="col-md-6">
+                <div class="pull-left">
+                    Contract Balance: {{ balance }}
+                    <b-button style="height: 2.5em" variant="success" v-on:click="update">
+                        Update
+                    </b-button>
+                    <b-button style="height: 2.5em" variant="danger" v-on:click="kill">
+                        Kill
+                    </b-button>
+                </div>
+            </b-col>
+            <b-col class="col-md-6">
+                <div class="pull-left">
+                    Deposit into contract: <input v-model="mint" placeholder="Minimum mint Ether">
+
+                    <b-button style="height: 2.5em" variant="success" v-on:click="depositContract">
+                        Deposit
+                    </b-button>
+                </div>
             </b-col>
         </b-row>
         <b-row>
             <b-col>
-                <h1>
-                    <b-badge variant="success">Welcome to the new World of Roulette</b-badge>
+                <h1 class="pull-left">
+                    <b-badge style="width: 32em;" variant="success">Welcome to the new World of Roulette</b-badge>
                 </h1>
             </b-col>
         </b-row>
         <b-row class="mb-3">
             <b-col>
-                Deposit into contract: <input v-model="mint" placeholder="Minimum mint Ether">
-
-                <b-button style="height: 2.5em" variant="success" v-on:click="depositContract">
-                    Deposit
-                </b-button>
-            </b-col>
-        </b-row>
-        <b-row class="mb-3">
-            <b-col>
-                Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max: {{
-                maximum }})
+                <div class="pull-left">
+                    Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max:
+                    {{
+                    maximum }})
+                </div>
             </b-col>
         </b-row>
         <b-row>
-            <b-button style="width: 60em" variant="success" v-on:click="clickNumber([0], 17)">
+            <b-button style="width: 60em" variant="success" class="border border-white"
+                      v-on:click="clickNumber([0], 17)">
                 0
             </b-button>
         </b-row>
@@ -42,45 +48,51 @@
             <b-col class="ml-0" cols="10.9">
                 <div>
                     <span v-for="n in 36" v-if="n % 3 == 0">
-                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber([n], 17)">
+                        <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
+                                  v-on:click="clickNumber([n], 17)">
                         {{ n }}
                         </b-button>
-                        <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
                             {{ n }}
                         </b-button>
                     </span>
                     <span>
-                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER3TO36, Fields.FACTOR3TO36)">
+                        <b-button variant="success" class="border border-white"
+                                  v-on:click="clickNumber(Fields.NUMBER3TO36, Fields.FACTOR3TO36)">
                             2:1
                         </b-button>
                     </span>
                 </div>
                 <div>
                     <span v-for="n in 36" v-if="(n + 1) % 3 == 0">
-                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber([n], 17)">
+                        <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
+                                  v-on:click="clickNumber([n], 17)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
                             {{n}}
                         </b-button>
                     </span>
                     <span>
-                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER2TO35, Fields.FACTOR2TO35)">
+                        <b-button variant="success" class="border border-white"
+                                  v-on:click="clickNumber(Fields.NUMBER2TO35, Fields.FACTOR2TO35)">
                             2:1
                         </b-button>
                     </span>
                 </div>
                 <div>
                     <span v-for="n in 36" v-if="(n + 2) % 3 == 0">
-                        <b-button v-if="n % 2 == 0" variant="dark" v-on:click="clickNumber([n], 17)">
+                        <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
+                                  v-on:click="clickNumber([n], 17)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
                             {{n}}
                         </b-button>
                     </span>
                     <span>
-                        <b-button variant="success" v-on:click="clickNumber(Fields.NUMBER1TO34, Fields.FACTOR1TO34)">
+                        <b-button variant="success" class="border border-white"
+                                  v-on:click="clickNumber(Fields.NUMBER1TO34, Fields.FACTOR1TO34)">
                             2:1
                         </b-button>
                     </span>
@@ -88,70 +100,87 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-button style="width: 20em" variant="success"
+            <b-button style="width: 20em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBER1T012, Fields.FACTOR1T012)">
                 1st 12
             </b-button>
-            <b-button style="width: 20em" variant="success"
+            <b-button style="width: 20em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBER2T012, Fields.FACTOR2T012)">
                 2nd 12
             </b-button>
-            <b-button style="width: 20em" variant="success"
+            <b-button style="width: 20em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBER3T012, Fields.FACTOR3T012)">
                 3rd 12
             </b-button>
         </b-row>
         <b-row>
-            <b-button style="width: 10em" variant="success"
+            <b-button style="width: 10em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBER1TO18, Fields.FACTOR1TO18)">
                 1 to 18
             </b-button>
-            <b-button style="width: 10em" variant="success"
+            <b-button style="width: 10em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBEREVEN, Fields.FACTOREVEN)">
                 EVEN
             </b-button>
-            <b-button style="width: 10em" variant="danger"
+            <b-button style="width: 10em" class="border border-white" variant="danger"
                       v-on:click="clickNumber(Fields.NUMBERRED, Fields.FACTORRED)">
                 RED
             </b-button>
-            <b-button style="width: 10em" variant="dark"
+            <b-button style="width: 10em" class="border border-white" variant="dark"
                       v-on:click="clickNumber(Fields.NUMBERBLACK, Fields.FACTORBLACK)">
                 BLACK
             </b-button>
-            <b-button style="width: 10em" variant="success"
+            <b-button style="width: 10em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBERODD, Fields.FACTORODD)">
                 ODD
             </b-button>
-            <b-button style="width: 10em" variant="success"
+            <b-button style="width: 10em" class="border border-white" variant="success"
                       v-on:click="clickNumber(Fields.NUMBER19TO36, Fields.FACTOR19TO36)">
                 19 to 36
             </b-button>
         </b-row>
         <b-row>
-            <a href="#" v-bind:class="[activeClass]"><img id="wheel" width="400" height="400"
-                                                          src="../assets/roulette_wheel.png"/></a>
+            <h1>
+                <b-badge style="width: 32em" variant="dark">
+                    Einsatz: {{ totalBet }} Gewinn: {{ totalWon }}
+                </b-badge>
+            </h1>
+            <h4>
+                Gesetzte Zahlen: {{ setNumbers }}
+            </h4>
+        </b-row>
+        <b-row>
+            <b-button style="width: 30em;" variant="danger" class="border border-white" v-on:click="removeBets">
+                <h3>Remove bets</h3>
+            </b-button>
+            <b-button style="width: 30em;" variant="warning" v-on:click="play">
+                <h1>Play</h1>
+            </b-button>
+        </b-row>
+        <b-row class="mt-5">
+            <a href="#" v-on:click="play" v-bind:class="[activeClass]"><img id="wheel" width="400"
+                                                                            height="400"
+                                                                            src="../assets/Roulette_wheel_without_background.png"/></a>
             <b-col>
                 <div v-if="winEvent != null" style="font-size: 100px">
                     {{ winEvent._winningNumber }}
                 </div>
             </b-col>
         </b-row>
-        <b-row class="mb-3 mt-5">
-            <b-col>
-                <div>
-                    Already Bet: {{ totalBet }}
-                </div>
-                <b-button style="width: 10em;" variant="success" v-on:click="play">
-                    Play
-                </b-button>
-                <div>
-                    Total Won: {{ totalWon }}
-                </div>
-                <div v-if="winEvent != null">
-                    {{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}
-                </div>
-            </b-col>
-        </b-row>
+        <!--<b-row class="mb-3 mt-5">-->
+        <!--<b-col>-->
+        <!--<div>-->
+        <!--Already Bet: {{ totalBet }}-->
+        <!--</div>-->
+
+        <!--<div>-->
+        <!--Total Won: {{ totalWon }}-->
+        <!--</div>-->
+        <!--<div v-if="winEvent != null">-->
+        <!--{{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}-->
+        <!--</div>-->
+        <!--</b-col>-->
+        <!--</b-row>-->
     </b-container>
 </template>
 
@@ -176,7 +205,8 @@
                 playedCount: this.$store.state.rouletteComponent.playedCount,
                 wonCount: this.$store.state.rouletteComponent.wonCount,
                 activeClass: '',
-                Fields: Fields
+                Fields: Fields,
+                setNumbers: [],
             }
         },
         methods: {
@@ -230,10 +260,14 @@
             },
 
             clickNumber(numbers, factor) {
+                if (!this.checkSetNumbers(numbers)) {
+                    return;
+                }
                 var number = [];
                 numbers.forEach(function (element) {
-                    number.push(element)
+                    number.push(element);
                 })
+                this.setNumbers.push(number);
                 this.$store.dispatch('setBet', {
                     number: number,
                     amount: this.amount,
@@ -310,6 +344,35 @@
                         this.update()
                     }
                 })
+            },
+
+            removeBets() {
+                this.setNumbers = [];
+                this.totalBet = 0;
+                this.$store.state.contractInstance().removeBets({
+                    from: this.$store.state.web3.coinbase
+                }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        this.update()
+                    }
+                })
+            },
+
+            checkSetNumbers(numbers) {
+                for (var i = 0; i < this.setNumbers.length; i++) {
+                    console.log(this.setNumbers[i]);
+                    console.log(this.setNumbers);
+                    console.log(numbers);
+                    console.log(this.setNumbers[i] == numbers);
+                    if (this.setNumbers[i] == numbers) {
+                    console.log(this.setNumbers[i]);
+                        return false;
+                    }
+                }
+
+                return true;
             }
         },
         beforeCreate() {

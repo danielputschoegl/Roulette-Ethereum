@@ -35,7 +35,7 @@ contract Roulette {
         require(_number.length == _value.length && _value.length == _factor.length && _number.length == _factor.length);
 
         for (uint i = 0; i < _number.length; i++) {
-            require(-1 <= _number[i] && _number[i] <= 50);
+            require(0 <= _number[i] && _number[i] <= 50);
 
             require(minimumBet <= _value[i] && _value[i] <= maximumBet);
 
@@ -90,5 +90,9 @@ contract Roulette {
         bank.transfer(address(this).balance);
         emit Balance(address(this).balance);
         selfdestruct(owner);
+    }
+
+    function removeBets() public {
+        delete (playerBets[msg.sender]);
     }
 }

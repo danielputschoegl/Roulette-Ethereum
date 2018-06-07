@@ -1,16 +1,3 @@
-// const NUMBER1T012 = '1TO12'
-// const NUMBER2T012 = '2TO12'
-// const NUMBER3T012 = '3TO12'
-// const NUMBER1TO18 = '1TO18'
-// const NUMBER19TO36 = '19TO36'
-// const EVEN = 'EVEN'
-// const ODD = 'ODD'
-// const RED = 'RED'
-// const BLACK = 'BLACK'
-// const NUMBER3TO36 = '3TO36'
-// const NUMBER2TO35 = '2TO35'
-// const NUMBER1TO34 = '1TO34'
-
 export default {
     NUMBER1T012: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     NUMBER2T012: [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
