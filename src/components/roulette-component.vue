@@ -168,18 +168,18 @@
             </b-col>
         </b-row>
         <!--<b-row class="mb-3 mt-5">-->
-        <!--<b-col>-->
-        <!--<div>-->
-        <!--Already Bet: {{ totalBet }}-->
-        <!--</div>-->
+            <!--<b-col>-->
+                <!--<div>-->
+                    <!--Already Bet: {{ totalBet }}-->
+                <!--</div>-->
 
-        <!--<div>-->
-        <!--Total Won: {{ totalWon }}-->
-        <!--</div>-->
-        <!--<div v-if="winEvent != null">-->
-        <!--{{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}-->
-        <!--</div>-->
-        <!--</b-col>-->
+                <!--<div>-->
+                    <!--Total Won: {{ totalWon }}-->
+                <!--</div>-->
+                <!--<div v-if="winEvent != null">-->
+                    <!--{{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}-->
+                <!--</div>-->
+            <!--</b-col>-->
         <!--</b-row>-->
     </b-container>
 </template>
@@ -235,6 +235,7 @@
                         this.balance = parseFloat(web3.fromWei(result, 'ether'))
                     }
                 })
+                this.$store.state.rouletteComponent.totalBet = 0;
             },
 
             depositContract() {
@@ -348,6 +349,7 @@
 
             removeBets() {
                 this.setNumbers = [];
+                this.amount = 0;
                 this.totalBet = 0;
                 this.$store.state.contractInstance().removeBets({
                     from: this.$store.state.web3.coinbase
@@ -362,12 +364,7 @@
 
             checkSetNumbers(numbers) {
                 for (var i = 0; i < this.setNumbers.length; i++) {
-                    console.log(this.setNumbers[i]);
-                    console.log(this.setNumbers);
-                    console.log(numbers);
-                    console.log(this.setNumbers[i] == numbers);
                     if (this.setNumbers[i] == numbers) {
-                    console.log(this.setNumbers[i]);
                         return false;
                     }
                 }
