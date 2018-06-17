@@ -32,9 +32,9 @@
         <b-row class="mb-3">
             <b-col>
                 <div class="pull-left">
-                    Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Min: {{ minimum }}, Max:
-                    {{
-                    maximum }})
+                    Amount to bet: <input v-model="amount" placeholder="Minimum amount Ether"> (Total Min in Ether: {{
+                    minimum }}, Total Max in Ether:
+                    {{ maximum }})
                 </div>
             </b-col>
         </b-row>
@@ -49,16 +49,17 @@
                 <div>
                     <span v-for="n in 36" v-if="n % 3 == 0">
                         <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
-                                  v-on:click="clickNumber([n], 17)">
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                         {{ n }}
                         </b-button>
-                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white"
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                             {{ n }}
                         </b-button>
                     </span>
                     <span>
                         <b-button variant="success" class="border border-white"
-                                  v-on:click="clickNumber(Fields.NUMBER3TO36, Fields.FACTOR3TO36)">
+                                  v-on:click="clickNumber(Fields.NUMBER3TO36, Fields.COLUMNS)">
                             2:1
                         </b-button>
                     </span>
@@ -66,16 +67,17 @@
                 <div>
                     <span v-for="n in 36" v-if="(n + 1) % 3 == 0">
                         <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
-                                  v-on:click="clickNumber([n], 17)">
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white"
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                             {{n}}
                         </b-button>
                     </span>
                     <span>
                         <b-button variant="success" class="border border-white"
-                                  v-on:click="clickNumber(Fields.NUMBER2TO35, Fields.FACTOR2TO35)">
+                                  v-on:click="clickNumber(Fields.NUMBER2TO35, Fields.COLUMNS)">
                             2:1
                         </b-button>
                     </span>
@@ -83,16 +85,17 @@
                 <div>
                     <span v-for="n in 36" v-if="(n + 2) % 3 == 0">
                         <b-button v-if="n % 2 == 0" variant="dark" class="border border-white"
-                                  v-on:click="clickNumber([n], 17)">
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                         {{n}}
                         </b-button>
-                        <b-button v-else variant="danger" class="border border-white" v-on:click="clickNumber([n], 17)">
+                        <b-button v-else variant="danger" class="border border-white"
+                                  v-on:click="clickNumber([n], Fields.FULLNUMBER)">
                             {{n}}
                         </b-button>
                     </span>
                     <span>
                         <b-button variant="success" class="border border-white"
-                                  v-on:click="clickNumber(Fields.NUMBER1TO34, Fields.FACTOR1TO34)">
+                                  v-on:click="clickNumber(Fields.NUMBER1TO34, Fields.COLUMNS)">
                             2:1
                         </b-button>
                     </span>
@@ -101,52 +104,52 @@
         </b-row>
         <b-row>
             <b-button style="width: 20em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBER1T012, Fields.FACTOR1T012)">
+                      v-on:click="clickNumber(Fields.NUMBER1T012, Fields.DOZENS)">
                 1st 12
             </b-button>
             <b-button style="width: 20em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBER2T012, Fields.FACTOR2T012)">
+                      v-on:click="clickNumber(Fields.NUMBER2T012, Fields.DOZENS)">
                 2nd 12
             </b-button>
             <b-button style="width: 20em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBER3T012, Fields.FACTOR3T012)">
+                      v-on:click="clickNumber(Fields.NUMBER3T012, Fields.DOZENS)">
                 3rd 12
             </b-button>
         </b-row>
         <b-row>
             <b-button style="width: 10em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBER1TO18, Fields.FACTOR1TO18)">
+                      v-on:click="clickNumber(Fields.NUMBER1TO18, Fields.HALFS)">
                 1 to 18
             </b-button>
             <b-button style="width: 10em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBEREVEN, Fields.FACTOREVEN)">
+                      v-on:click="clickNumber(Fields.NUMBEREVEN, Fields.ODDEVEN)">
                 EVEN
             </b-button>
             <b-button style="width: 10em" class="border border-white" variant="danger"
-                      v-on:click="clickNumber(Fields.NUMBERRED, Fields.FACTORRED)">
+                      v-on:click="clickNumber(Fields.NUMBERRED, Fields.REDBLACK)">
                 RED
             </b-button>
             <b-button style="width: 10em" class="border border-white" variant="dark"
-                      v-on:click="clickNumber(Fields.NUMBERBLACK, Fields.FACTORBLACK)">
+                      v-on:click="clickNumber(Fields.NUMBERBLACK, Fields.REDBLACK)">
                 BLACK
             </b-button>
             <b-button style="width: 10em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBERODD, Fields.FACTORODD)">
+                      v-on:click="clickNumber(Fields.NUMBERODD, Fields.ODDEVEN)">
                 ODD
             </b-button>
             <b-button style="width: 10em" class="border border-white" variant="success"
-                      v-on:click="clickNumber(Fields.NUMBER19TO36, Fields.FACTOR19TO36)">
+                      v-on:click="clickNumber(Fields.NUMBER19TO36, Fields.HALFS)">
                 19 to 36
             </b-button>
         </b-row>
         <b-row>
             <h1>
                 <b-badge style="width: 32em" variant="dark">
-                    Einsatz: {{ totalBet }} Gewinn: {{ totalWon }}
+                    Betting: {{ totalBet }} Winnings: {{ totalWon }}
                 </b-badge>
             </h1>
             <h4>
-                Gesetzte Zahlen: {{ setNumbers }}
+                Bets: {{ bets }}
             </h4>
         </b-row>
         <b-row>
@@ -158,29 +161,18 @@
             </b-button>
         </b-row>
         <b-row class="mt-5">
-            <a href="#" v-on:click="play" v-bind:class="[activeClass]"><img id="wheel" width="400"
-                                                                            height="400"
-                                                                            src="../assets/Roulette_wheel_without_background.png"/></a>
+            <a v-on:click="play" v-bind:style="activeClass"><img id="wheel" width="400"
+                                                                   height="400"
+                                                                   src="../assets/roulette_wheel.png"/></a>
             <b-col>
                 <div v-if="winEvent != null" style="font-size: 100px">
-                    {{ winEvent._winningNumber }}
+                    {{ winEvent.winningNumber }}
+                </div>
+                <div v-if="winEvent != null">
+                    {{ lastNumbers }}
                 </div>
             </b-col>
         </b-row>
-        <!--<b-row class="mb-3 mt-5">-->
-            <!--<b-col>-->
-                <!--<div>-->
-                    <!--Already Bet: {{ totalBet }}-->
-                <!--</div>-->
-
-                <!--<div>-->
-                    <!--Total Won: {{ totalWon }}-->
-                <!--</div>-->
-                <!--<div v-if="winEvent != null">-->
-                    <!--{{ winEvent._betNumber }} {{ winEvent._totalAmount }} {{ winEvent._winningNumber }}-->
-                <!--</div>-->
-            <!--</b-col>-->
-        <!--</b-row>-->
     </b-container>
 </template>
 
@@ -206,7 +198,7 @@
                 wonCount: this.$store.state.rouletteComponent.wonCount,
                 activeClass: '',
                 Fields: Fields,
-                setNumbers: [],
+                lastNumbers: []
             }
         },
         methods: {
@@ -235,7 +227,7 @@
                         this.balance = parseFloat(web3.fromWei(result, 'ether'))
                     }
                 })
-                this.$store.state.rouletteComponent.totalBet = 0;
+                this.$store.dispatch('setBetAmount', 0)
             },
 
             depositContract() {
@@ -252,7 +244,6 @@
                             if (err) {
                                 console.log('could not get event Balance()')
                             } else {
-                                console.log('balance')
                                 this.balance = parseFloat(web3.fromWei(result.args._balance, 'ether'))
                             }
                         })
@@ -261,25 +252,47 @@
             },
 
             clickNumber(numbers, factor) {
-                if (!this.checkSetNumbers(numbers)) {
+                if (this.amount <= 0) {
+                    return
+                }
+
+                let num = this.checkSetNumbers(numbers);
+                if (num > -1) {
+                    this.bets.splice(num, 1)
+                    this.$store.dispatch('setBetAmount', web3.fromWei(Math.round(web3.toWei(+this.totalBet - +this.$store.state.rouletteComponent.bets[num][1], 'ether')), 'ether'))
+                    this.$store.dispatch('removeBet', num)
+                    this.totalBet = this.$store.state.rouletteComponent.totalBet
                     return;
                 }
+
                 var number = [];
                 numbers.forEach(function (element) {
-                    number.push(element);
+                    number.push(element)
                 })
-                this.setNumbers.push(number);
                 this.$store.dispatch('setBet', {
                     number: number,
                     amount: this.amount,
                     factor: factor
                 })
-                this.$store.dispatch('addBetAmount', this.amount)
-                this.totalBet = this.$store.state.rouletteComponent.totalBet;
+                this.$store.dispatch('setBetAmount', web3.fromWei(Math.round(web3.toWei(+this.totalBet + +this.amount, 'ether')), 'ether'))
+                this.totalBet = this.$store.state.rouletteComponent.totalBet
+                let bet = []
+                this.$store.state.rouletteComponent.bets.forEach(function (element) {
+                    bet.push(element[0])
+                });
+                this.bets = bet
             },
 
             play() {
-                this.activeClass = 'active'
+                if (this.totalBet < this.minimum || this.totalBet == 0 || this.maximum < this.totalBet) {
+                    return;
+                }
+
+                if (this.bets.length <= 0) {
+                    return;
+                }
+
+                this.activeClass = this.active()
                 this.$store.dispatch('addPlayed', 1)
                 this.playedCount = this.$store.state.rouletteComponent.playedCount
                 var bets = this.$store.state.rouletteComponent.bets
@@ -301,6 +314,7 @@
                     from: this.$store.state.web3.coinbase
                 }, (err, result) => {
                     if (err) {
+                        this.activeClass = this.fadeOut()
                         console.log(err)
                     } else {
                         let Won = this.$store.state.contractInstance().Won()
@@ -308,15 +322,34 @@
                             if (err) {
                                 console.log('could not get event Won()')
                             } else {
-                                if (this.wonCount < this.playedCount) {
-                                    this.winEvent = result.args
-                                    this.winEvent._totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
-                                    this.winEvent._winningNumber = parseInt(result.args._winningNumber)
-                                    this.winEvent._betNumber = result.args._betNumber
-                                    console.log("winEvent: " + this.winEvent._winningNumber)
-                                    this.totalWon += this.winEvent._totalAmount;
+                                if (this.winEvent != null) {
+                                    if (this.winEvent.blockHash != result.blockHash) {
+                                        this.winEvent = result
+                                        this.winEvent.blockHash = result.blockHash
+                                        this.winEvent.totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
+                                        this.winEvent.winningNumber = parseInt(result.args._winningNumber)
+                                        this.winEvent.betNumber = result.args._betNumber
+
+                                        this.totalWon += this.winEvent.totalAmount;
+                                        this.$store.dispatch('addWon', 1)
+                                        this.wonCount = this.$store.state.rouletteComponent.wonCount
+                                        this.activeClass = this.fadeOut()
+                                        this.lastNumbers = this.winEvent.betNumber
+                                        this.removeBets()
+                                    }
+                                } else {
+                                    this.winEvent = result
+                                    this.winEvent.blockHash = result.blockHash
+                                    this.winEvent.totalAmount = parseFloat(web3.fromWei(result.args._amount, 'ether'))
+                                    this.winEvent.winningNumber = parseInt(result.args._winningNumber)
+                                    this.winEvent.betNumber = result.args._betNumber
+
+                                    this.totalWon += this.winEvent.totalAmount;
                                     this.$store.dispatch('addWon', 1)
                                     this.wonCount = this.$store.state.rouletteComponent.wonCount
+                                    this.activeClass = this.fadeOut()
+                                    this.lastNumbers = this.winEvent.betNumber
+                                    this.removeBets()
                                 }
                             }
                         })
@@ -326,11 +359,11 @@
                                 console.log('could not get event Balance()')
                             } else {
                                 this.balance = parseFloat(web3.fromWei(result.args._balance, 'ether'))
+                                console.log(this.balance)
                             }
                         })
 
                     }
-                    this.activeClass = 'fadeOut'
                 })
             },
 
@@ -348,28 +381,41 @@
             },
 
             removeBets() {
-                this.setNumbers = [];
-                this.amount = 0;
+                this.bets = []
+                this.$store.dispatch('clearBet')
                 this.totalBet = 0;
-                this.$store.state.contractInstance().removeBets({
-                    from: this.$store.state.web3.coinbase
-                }, (err, result) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        this.update()
-                    }
-                })
+                this.$store.dispatch('setBetAmount', this.totalBet);
+                if (this.activeClass == this.active()) {
+                    this.activeClass = this.fadeOut()
+                }
             },
 
             checkSetNumbers(numbers) {
-                for (var i = 0; i < this.setNumbers.length; i++) {
-                    if (this.setNumbers[i] == numbers) {
-                        return false;
+                for (let i = 0; i < this.bets.length; i++) {
+                    for (let j = 0; j < this.bets[i].length; j++) {
+                        if (j < numbers.length) {
+                            if (this.bets[i][j] != numbers[j]) {
+                                break;
+                            } else {
+                                if (this.bets[i][j].length == numbers[j].length) {
+                                    return i;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
                     }
                 }
 
-                return true;
+                return -1;
+            },
+
+            active() {
+                return '-webkit-transform: rotate(1000000000000000000000000000deg); -webkit-transition: -webkit-transform 1000000000000000000s ease-out;'
+            },
+
+            fadeOut() {
+                return '-webkit-transform: rotate(600deg); -webkit-transition: -webkit-transform 2s ease-out;'
             }
         },
         beforeCreate() {

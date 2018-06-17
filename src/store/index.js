@@ -44,8 +44,14 @@ export const store = new Vuex.Store({
             temp.push(payload.factor)
             state.rouletteComponent.bets.push(temp)
         },
-        addAmount(state, payload) {
-            state.rouletteComponent.totalBet += payload;
+        spliceBet(state, payload) {
+            state.rouletteComponent.bets.splice(payload, 1)
+        },
+        removeAllBets(state) {
+            state.rouletteComponent.bets = []
+        },
+        setAmount(state, payload) {
+            state.rouletteComponent.totalBet = payload;
         },
         playedCount(state, payload) {
             state.rouletteComponent.playedCount += payload;
@@ -80,8 +86,14 @@ export const store = new Vuex.Store({
         setBet({commit}, payload) {
             commit('pushBet', payload)
         },
-        addBetAmount({commit}, payload) {
-            commit('addAmount', payload)
+        removeBet({commit}, payload) {
+            commit('spliceBet', payload)
+        },
+        clearBet({commit}) {
+            commit('removeAllBets')
+        },
+        setBetAmount({commit}, payload) {
+            commit('setAmount', payload)
         },
         addPlayed({commit}, payload) {
             commit('playedCount', payload)

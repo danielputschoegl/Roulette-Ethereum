@@ -25,14 +25,4 @@
         width: 5em;
         height: 5em;
     }
-
-    .active {
-        -webkit-transform: rotate(1000000000000000000000000000deg);
-        -webkit-transition: -webkit-transform 1000000000000000000s ease-out;
-    }
-
-    .fadeOut {
-        -webkit-transform: rotate(600deg);
-        -webkit-transition: -webkit-transform 2s ease-out;
-    }
 </style>
