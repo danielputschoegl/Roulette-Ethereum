@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" style="margin-top: 0; background-color: lightgreen">
         <router-view/>
     </div>
 </template>
@@ -24,5 +24,7 @@
     button {
         width: 5em;
         height: 5em;
+        border-color: lightgreen !important;
+        border: 1px;
     }
 </style>

@@ -1,12 +1,8 @@
 <template>
-    <b-container class="bv-example-row mt-5">
-        <b-row>
-            <b-col>
-                <roulette-component/>
-                <hello-metamask/>
-            </b-col>
-        </b-row>
-    </b-container>
+    <div>
+        <roulette-component/>
+        <!--<hello-metamask/>-->
+    </div>
 </template>
 <script>
     import HelloMetamask from '@/components/hello-metamask'
